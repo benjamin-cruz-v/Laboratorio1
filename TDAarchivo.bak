@@ -1,12 +1,4 @@
 #lang racket
-
-(provide archivo)
-(provide archivo?)
-(provide getNombre)
-(provide getTexto)
-(provide setNombre)
-(provide setTexto)
- 
 ;TDA Archivos
 ;representacion
 ;(list string string)
@@ -26,52 +18,48 @@
 ;descripción: Función que permite determinar si el constructor archivo esta bien implementado
 ;dom: lista
 ;rec: boolean
-(define archivo? (lambda (archivo)
+(define (archivo? archivo)
   (if (list? archivo)
       #t
       #f
-      )))
+      ))
 
 ;SELECTORES
 ;descripción: Función que retorna el nombre del archivo
 ;dom: archivo
 ;rec: string 
-(define getNombre (lambda(a)
+(define (getNombre a)
    (if (archivo? a)
        (car a)
        0
    )
- ))
+ )
 ;descripción: Función que retorna el texto del archivo
 ;dom: archivo
 ;rec: string 
-(define getTexto (lambda(a)
+(define (getTexto a)
    (if (archivo? a)
        (cadr a)
        0
    )
- ))
+ )
 
 ;Modificadores
 ;descripción: Función que crea un nuevo nombre a la funcion archivo
 ;dom: lista X string
 ;rec: lista
-(define setNombre (lambda(a nuevoNombre)
+(define (setNombre a nuevoNombre)
   (if (archivo? a)
       (archivo nuevoNombre (getTexto a))
       null
    )
- ))
+ )
 ;descripción: Función que crea un nuevo texto a la funcion archivo
 ;dom: lista X string
 ;rec: lista
-(define setTexto (lambda (a nuevoTexto)
+(define (setTexto a nuevoTexto)
   (if (archivo? a)
       (archivo (getNombre a)nuevoTexto)
       null
    )
- ))
-;------------------------------------
-
-;Ejemplo de uso
-(define archivo1 (archivo "nombre1" "texto1"))
+ )

@@ -1,12 +1,4 @@
 #lang racket
-(require "TDAarchivo.rkt")
-(provide workspace)
-(provide workspace?)
-(provide getArchivo)
-(provide agregarA)
-
-
-
 ;TDA workspace
 ;representacion
 ;(list (list string)
@@ -26,34 +18,28 @@
 ;descripción: Función que permite determinar si el constructor workpace esta bien implementado
 ;dom: lista
 ;rec: boolean
-(define workspace? (lambda (archivo)
+(define (workspace? archivo)
   (if (list? archivo)
       #t
       #f
-      )))
+      ))
       
 ;SELECTORES
 ;descripción: Función que retorna una lista en la posicion pedida
 ;dom: lista X entero
 ;rec: lista
-(define getArchivo (lambda (lista p)    
-               (if (= p 0)
-                   (car lista) 
-                   (getArchivo (cdr lista) (- p 1))  
-               )
-              ))
+(define (getArchivo lista p)
+  (list-ref lista p)
+  )      
+
 
 ;Modificadores
 ;descripción: Función que agrega una lista al workspace
 ;dom: lista X lista
 ;rec: lista
-(define agregarA (lambda (lista)
+(define agregar (lambda (lista)
                   (lambda (archivo)
                     (append (workspace archivo) (list lista)
                     )
                   )))
 ;-------------------------------------------------------------------------------
-
-;Ejemplo de uso
-(define archivo1 (archivo "nombre1" "texto1"))
-(define zona (workspace archivo1))

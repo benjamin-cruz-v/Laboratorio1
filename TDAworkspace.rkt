@@ -1,5 +1,6 @@
 #lang racket
 (require "TDAarchivo.rkt")
+;Funciones que se exportan
 (provide workspace)
 (provide workspace?)
 (provide getArchivo)
@@ -15,12 +16,7 @@
 ;descripción: Función que retorna la lista con los archivos
 ;dom: lista
 ;rec: lista de lista
-(define workspace (lambda (archivo)
-                  (if (list? archivo)
-       (list archivo)
-      "falso"
-      ) 
-    ))
+(define (workspace . archivo)archivo)
 
 ;PERTENENCIA
 ;descripción: Función que permite determinar si el constructor workpace esta bien implementado
@@ -56,4 +52,6 @@
 
 ;Ejemplo de uso
 (define archivo1 (archivo "nombre1" "texto1"))
-(define zona (workspace archivo1))
+(define archivo2 (archivo "nombre2" "texto2"))
+(define zona1 (workspace archivo1 archivo2))
+(define nuevazona ((agregarA (archivo"nombre3" "texto3"))zona1))

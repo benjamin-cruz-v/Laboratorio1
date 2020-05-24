@@ -1,5 +1,5 @@
 #lang racket
-
+;Funciones que se exportan
 (provide archivo)
 (provide archivo?)
 (provide getNombre)
@@ -38,7 +38,7 @@
 ;rec: string 
 (define getNombre (lambda(a)
    (if (archivo? a)
-       (car a)
+       (list(car a))
        0
    )
  ))
@@ -75,3 +75,4 @@
 
 ;Ejemplo de uso
 (define archivo1 (archivo "nombre1" "texto1"))
+(define archivo2 (archivo "nombre2" "texto2"))

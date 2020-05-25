@@ -1,27 +1,18 @@
 #lang racket
-(require "TDAarchivo.rkt")
-(require "TDAworkspace.rkt")
 
+(provide index)
+(provide index?)
+(provide agregarIndex)
 
-;FUNCION ADD
-;descripción: Implementación de la funcion add de git, esta funcion seleciona el prmer elemento de la lista
-;             que viene siendo el nombre del archivo y lo añade al index como un elemento de una lista
-;dom: lista X entero 
-;rec: elemento de lista
-;tipo de recusión: de cola
-(define add (lambda (lista i)
-               (if (= i 0) 
-                   (list(getNombre(car lista)))
-                   (add (cdr lista) (- i 1)) 
-               )
-              )
-  )
-;------------------------------------------------------
-;Implementación del TDA index
-;representacio
-;(list elemento) 
+;TDA index
+;representacion
+;(list string)
 
 ;CONSTRUCTOR
+;descripción: Función que retorna la lista con los archivos subidos al index
+;dom: lista
+;rec: lista de lista
+
 (define index (lambda (l)
                  (if (list? l)
                       l
@@ -29,6 +20,9 @@
                 )))
 
 ;PERTENENCIA
+;descripción: Función que permite determinar si el constructor index esta bien implementado
+;dom: lista
+;rec: boolean
 (define (index? lista)
   (if (list? lista)
       #t
@@ -36,7 +30,7 @@
       ))
 
 ;Modificadores
-;descripción: Función que agrega una lista al workspace
+;descripción: Función que agrega una lista al index
 ;dom: lista X lista
 ;rec: lista
 (define agregarIndex (lambda (lista)
@@ -45,6 +39,5 @@
                     )
                   )))
 
-
-
-
+;Ejemplo de uso
+;(index  (((git add) (list "nombre1"))zona1))

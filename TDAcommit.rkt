@@ -1,37 +1,39 @@
 #lang racket
 
 
+(require "tdaindex.rkt")
+(require "TDAarchivo.rkt")
+
 (provide commit)
 (provide commit?)
 (provide getMensaje)
 (provide getcommit)
 
-;Funciones que se exportan
-;TDA Archivos
+
+;TDA Commit
 ;representacion
 ;(list string string)
-;(list "archivo1" "texto1") 
+;(list "mensaje" "nombre del archivo) 
 
 ;CONSTRUCTOR
-;descripción: Permite crear un archivo
+;descripción: Permite crear un commit
 ;dom: string X string
 ;rec: lista
 (define commit (lambda (string)
                  (lambda (zona)
                   (if (and (string? string)(list? zona))
-        (list string (car zona))
+        (list string  (car(list-ref(cddr zona )1) ))
       "Commit formato incorrecto"
       ) 
     )))
 ;PERTENENCIA
-;descripción: Función que permite determinar si el constructor archivo esta bien implementado
+;descripción: Función que permite determinar si el constructor commit esta bien implementado
 ;dom: cualquer cosa
 ;rec: boolean
 (define commit? (lambda (c)
-         (and (cons? c)
-              (not (null? ((commit (car c)) (cdr c))))
-              )
-                   ))
+       (and (string? (car c))(string? (cadr c) )
+            )
+                  ))
 
 ;SELECTORES
 ;descripción: Función que retorna el mensaje del commit
@@ -52,12 +54,4 @@
        0
    )
  ))
-
-
-
-
-
-
-
-
 

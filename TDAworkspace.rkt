@@ -1,11 +1,26 @@
 #lang racket
 (require "TDAarchivo.rkt")
+(require "TDAzonas.rkt")
+
 ;Funciones que se exportan
 (provide workspace)
 (provide workspace?)
 (provide getArchivo)
 (provide agregarA)
 
+
+;descripción: Función que asimila el funcionamiento de andmap,
+;             Función que retorna boolean de acuerdo a la funcion que se le pasa de parametr
+;dom: funcion X lista
+;rec: boolean
+(define myandmap (lambda (f L)
+                ;caso base
+                (if (null? L)
+                    #t
+                    (and (f (car L)) (myandmap f (cdr L)))
+                )
+              )
+)
 
 
 ;TDA workspace
@@ -16,16 +31,22 @@
 ;descripción: Función que retorna la lista con los archivos
 ;dom: lista
 ;rec: lista de lista
-(define (workspace . archivo)archivo)
+;(define (workspace . archivo)archivo)
+(define (workspace . archivo)
+  (if (myandmap archivo? archivo)
+     archivo
+     
+      null
+      ))
 
 ;PERTENENCIA
-;descripción: Función que permite determinar si el constructor workpace esta bien implementado
-;dom: lista
+;descripción: Función que permite determinar si el constructor workspace esta bien implementado
+;dom: cualquer cosa
 ;rec: boolean
+;ejemplo de uso :(workspace?  (workspace (archivo"archivo" "texto" ) ))
 (define workspace? (lambda (archivo)
-  (if (list? archivo)
-      #t
-      #f
+  (and (list? archivo)(myandmap archivo? archivo)
+  
       )))
       
 ;SELECTORES
@@ -34,7 +55,7 @@
 ;rec: lista
 (define getArchivo (lambda (lista p)    
                (if (= p 0)
-                   (car lista) 
+                   (cadr lista) 
                    (getArchivo (cdr lista) (- p 1))  
                )
               ))
@@ -50,8 +71,10 @@
                   )))
 ;-------------------------------------------------------------------------------
 
-;Ejemplo de uso
+;Ejemplo de uso 
 (define archivo1 (archivo "nombre1" "texto1"))
+(define archivo3 (archivo 56 "texto1")); ejemplo de como no se implementa
 (define archivo2 (archivo "nombre2" "texto2"))
+;Ejemplo de como se deben ir guardando la zonas de trabajo para su posterior uso
 (define zona1 (workspace archivo1 archivo2))
-(define nuevazona ((agregarA (archivo"nombre3" "texto3"))zona1))
+(define nuevazona1 ((agregarA (archivo"nombre3" "texto3"))zona1))

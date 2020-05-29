@@ -6,7 +6,7 @@
 (provide getTexto)
 (provide setNombre)
 (provide setTexto)
- 
+
 ;TDA Archivos
 ;representacion
 ;(list string string)
@@ -24,13 +24,14 @@
     ))
 ;PERTENENCIA
 ;descripción: Función que permite determinar si el constructor archivo esta bien implementado
-;dom: lista
+;dom: cualquer cosa
 ;rec: boolean
-(define archivo? (lambda (archivo)
-  (if (list? archivo)
-      #t
-      #f
-      )))
+
+(define archivo? (lambda (a)
+         (and (cons? a)
+              (not (null? (archivo (car a) (cdr a))))
+              )
+                   ))
 
 ;SELECTORES
 ;descripción: Función que retorna el nombre del archivo

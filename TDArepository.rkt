@@ -4,36 +4,37 @@
 (require "tdaindex.rkt")
 (require "TDAarchivo.rkt")
 (require "TDAcommit.rkt")
+(require "TDAzonas.rkt")
 
 ;Funciones que se exportan
-(provide localRepository)
-(provide localRepository?)
+(provide Repository)
+(provide Repository?)
 
-;descripción: Función que retorna boolean de acuerdo a la funcion que se le pasa de parametr
+
+;descripción: Función que asimila el funcionamiento de andmap,
+;             Función que retorna boolean de acuerdo a la funcion que se le pasa de parametr
 ;dom: funcion X lista
 ;rec: boolean
 (define myandmap (lambda (f L)
                 ;caso base
-                (if (null? L) ;condición de borde. Indica que la lista es nula o que se llego al final del la lista
+                (if (null? L)
                     #t
-                    ;se construye una nueva lista
-                    ;se deja como estado pendiente
-                    ;la aplicación de f al elemento actual (cabeza)
-                    ;en que se sitúa la evaluación recursiva
-                    (and (f (car L)) (myandmap f (cdr L))) ;descomposición recursiva para aplicar función f a cada elemento de la cola
+                    (and (f (car L)) (myandmap f (cdr L)))
                 )
               )
 )
 
-;TDA  localRepository
+;TDA Repository
 ;representacion
+;Esta representacion de TDA abarca tanto al LocalRepository y RemotoRepository pues ambas tienen
+;la misma estructura
 ;(list (list commit)
 
 ;CONSTRUCTOR
 ;descripción: Función que retorna la lista con los commit
 ;dom: lista
 ;rec: lista de lista
-(define (localRepository . commit)
+(define (Repository . commit)
   (if (myandmap commit? commit)
       commit
       null
@@ -44,7 +45,7 @@
 ;descripción: Función que permite determinar si el constructor localRepository esta bien implementado
 ;dom: cualquer cosa
 ;rec: boolean
-(define localRepository? (lambda (commit)
+(define Repository? (lambda (commit)
   (and (list? commit)(myandmap commit? commit)
     
       )))

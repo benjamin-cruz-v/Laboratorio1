@@ -1,0 +1,1 @@
+("7.6" racket ("d454cf55c390fbfca643598109489bf8e98d47f8" . "a9ab13b72e90c65faf9bcf217a6cdb76b81cadb3") #"C:\\Users\\Benja\\Laboratorio1\\TDAarchivo.rkt" #"C:\\Users\\Benja\\Laboratorio1\\tdaindex.rkt" (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))

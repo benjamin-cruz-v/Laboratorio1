@@ -1,8 +1,8 @@
+  
 #lang racket
 
 (require "TDAarchivo.rkt")
 (require "TDAworkspace.rkt")
-(require "TDAzonas.rkt")
 
 (provide index)
 (provide index?)
@@ -20,7 +20,7 @@
 
 (define index (lambda (nombre)
                  (if (list? nombre)
-                    nombre
+                     nombre
                      null
                 )))
 
@@ -29,7 +29,7 @@
 ;dom: culaquer cosa
 ;rec: boolean
 (define (index? lista)
-  (and (list? lista)(string?(car lista))
+  (and (list? lista)
       ))
 
 ;Modificadores

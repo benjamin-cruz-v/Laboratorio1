@@ -1,6 +1,5 @@
 #lang racket
 (require "TDAarchivo.rkt")
-(require "TDAzonas.rkt")
 
 ;Funciones que se exportan
 (provide workspace)
@@ -10,7 +9,7 @@
 
 
 ;descripción: Función que asimila el funcionamiento de andmap,
-;             Función que retorna boolean de acuerdo a la funcion que se le pasa de parametr
+;             Función que retorna boolean de acuerdo a la funcion que se le pasa de parametro
 ;dom: funcion X lista
 ;rec: boolean
 (define myandmap (lambda (f L)
@@ -21,7 +20,6 @@
                 )
               )
 )
-
 
 ;TDA workspace
 ;representacion
@@ -34,7 +32,7 @@
 ;(define (workspace . archivo)archivo)
 (define (workspace . archivo)
   (if (myandmap archivo? archivo)
-     archivo
+       archivo 
      
       null
       ))
@@ -71,7 +69,7 @@
                   )))
 ;-------------------------------------------------------------------------------
 
-;Ejemplo de uso 
+;Ejemplo de uso  
 (define archivo1 (archivo "nombre1" "texto1"))
 (define archivo3 (archivo 56 "texto1")); ejemplo de como no se implementa
 (define archivo2 (archivo "nombre2" "texto2"))

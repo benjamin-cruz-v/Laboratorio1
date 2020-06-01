@@ -10,6 +10,17 @@
 (provide getcommit)
 
 
+;descripcion:Fucnion que permite obtener un elemento de la lista de acuerdo a la posicion pedida
+;dom;lista X entero
+;rec;elemento de la lista, (este puede variar de acuerdo a que elementos tiene la lista)
+(define mylist-ref (lambda (lista p)
+                 (if (= p 0) 
+                   (car lista) 
+                   (mylist-ref (cdr lista) (- p 1))))) 
+
+
+
+;------------------------------------
 ;TDA Commit
 ;representacion
 ;(list string string)
@@ -22,7 +33,7 @@
 (define commit (lambda (string)
                  (lambda (zona)
                   (if (and (string? string)(list? zona))
-        (list string  (car(list-ref(cddr zona )1) ))
+        (list string  (car(mylist-ref(cddr zona )1) ))
       "Commit formato incorrecto"
       ) 
     )))

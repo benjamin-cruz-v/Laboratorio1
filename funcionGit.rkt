@@ -1,19 +1,27 @@
 #lang racket
 
-(require "TDAlocalrepository.rkt")
+(require "TDArepository.rkt")
 (require "TDAcommit.rkt")
 (require "TDAarchivo.rkt")
 (require "TDAworkspace.rkt")
 (require "tdaindex.rkt")
-
 (require racket/date)
-(provide add)
-(provide git)
+
 
 ;Uso de las funciones y para ocupar de ejemplo
 (define archivo1 (archivo "nombre1" "texto1"))
 (define archivo2 (archivo "nombre2" "texto2"))
 (define zona1 (workspace archivo1 archivo2))
+
+
+;descripcion:Fucnion que permite obtener un elemento de la lista de acuerdo a la posicion pedida
+;dom;lista X entero
+;rec;elemento de la lista, (este puede variar de acuerdo a que elementos tiene la lista)
+(define mylist-ref (lambda (lista p)
+                 (if (= p 0) 
+                   (car lista) 
+                   (mylist-ref (cdr lista) (- p 1))))) 
+
 
 ;FUNCION Zona
 ;descripción:  Funcion que va mostrando la zonas de trabajo y sus cambios despues de aplicar las funciones de git
@@ -44,13 +52,10 @@
             null
             (if (string? (car lista))
                        (if (equal? lista (getNombre (car zona))) 
-                           (zonas zona  (index (getNombre(car zona))) null null)
+                           (zonas zona1  (index (getNombre(car zona))) null null)
  
                            ((add lista) (cdr zona )))
                        ((add lista) ( cdr zona)) )))))
-
-
-
 
 ;FUNCION Push
 ;descripción:  Función que envía los commit desde el repositorio
@@ -58,10 +63,8 @@
 ;dom: zonas
 ;rec:nueva version de zonas,con los cambios reflejados
 (define push (lambda (zona)
-              
-                  (if (list? zona)
-
-                     (zonas (cadr zona)  null null  (list-ref zona 5)     )
+             (if (list? zona)
+              (zonas (cadr zona)  null null  (mylist-ref zona 5))
       "funcion mal ejecutada"
       ) 
     ))
@@ -73,13 +76,12 @@
 ;             index especificando un mensaje descriptivo (un string) para llevarlos al LocalRepository.            
 ;dom:string X zonas
 ;rec:nueva version de zonas,con los cambios reflejados
-;Ejemplo de uso: (((git add) (list "nombre1"))zona1)
-;                (((git commit)"mensaje de commit")zona2)
-(define commit (lambda (string)
+;Ejemplo de uso:(((git commit)"mensaje de commit")zona2)
+(define Fcommit (lambda (string)
                  (lambda (zona)
                   (if (and (string? string)(list? zona))
-        (zonas (cadr zona) (car(list-ref(cddr zona )1))
-               (Repository( list string  (car(list-ref(cddr zona )1))))null)
+        (zonas (cadr zona) (car(mylist-ref(cddr zona )1))
+               (Repository( list string  (car(mylist-ref(cddr zona )1))))null)
       "Commit formato incorrecto"
       ) 
     )))
@@ -92,7 +94,7 @@
 ;dom:funcion X zonas
 ;rec:recorrido de la funcion
 ;Ejemplo de uso: (((git add) (list "nombre1"))zona1)
-;                (((git commit)"mensaje de commit")zona2)
+;                (((git Fcommit)"mensaje de commit")zona2)
 (define git (lambda (funcion)
               (lambda (zonas)
                 (funcion zonas)
@@ -109,6 +111,13 @@
 (define gitFecha(lambda (git)
                (list git fecha)))
 
-;Ejemplo de como se deben ir guardando la zonas de trabajo para su posterior uso
+;1 Ejemplo de como se deben ir guardando la zonas de trabajo para su posterior uso
 (define zona2 (((git add) (list "nombre1"))zona1))
-(define zona3  (((git commit)"mensaje de commit")zona2))
+(define zona3  (((git Fcommit)"mensaje de commit")zona2))
+(define zona4  ((git push)zona3))
+
+;2 Ejemplo de como se deben ir guardando la zonas de trabajo para su posterior uso
+(define zona5 (((git add) (list "nombre2"))zona1))
+(define zona6  (((git Fcommit)"se agrega commit")zona5))
+(define zona7  ((git push)zona6))
+

@@ -4,7 +4,7 @@
 (require "tdaindex.rkt")
 (require "TDAarchivo.rkt")
 (require "TDAcommit.rkt")
-(require "TDAzonas.rkt")
+
 
 ;Funciones que se exportan
 (provide Repository)
@@ -42,7 +42,7 @@
 
 
 ;PERTENENCIA
-;descripción: Función que permite determinar si el constructor localRepository esta bien implementado
+;descripción: Función que permite determinar si el constructor Repository esta bien implementado
 ;dom: cualquer cosa
 ;rec: boolean
 (define Repository? (lambda (commit)
